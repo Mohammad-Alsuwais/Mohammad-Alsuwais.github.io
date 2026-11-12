@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohammad Alsuwais, computer engineer</title>
+<meta name="description" content="Portfolio of Mohammad Alsuwais, a computer engineering student at Near East University graduating in January 2027. Graduation project, background and CV.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F1B2D'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23F0B23A' stroke-width='3'/%3E%3C/svg%3E">
+<script>
+  // Apply a saved light/dark choice before the page paints
+  try { var saved = localStorage.getItem('theme'); if (saved) document.documentElement.dataset.theme = saved; } catch (e) {}
+</script>
+<style>
+  :root {
+    --paper: #F6F8FB;
+    --ink: #14233B;
+    --muted: #56657B;
+    --line: #D3DBE6;
+    --link: #8F5600;
+    --ring: #F0B23A;
+    --screen: #0F1B2D;
+    --font: "Avenir Next", Avenir, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0E1726; --ink: #E7EDF5; --muted: #9AA9BD; --line: #26364D; --link: #F0B23A; --screen: #070D18;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0E1726; --ink: #E7EDF5; --muted: #9AA9BD; --line: #26364D; --link: #F0B23A; --screen: #070D18;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1.0625rem/1.6 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 66rem; margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 3.5rem); }
+  a { color: var(--link); text-underline-offset: 0.18em; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 2px;
+  }
+  .skip { position: absolute; left: -999px; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--paper); padding: 0.5rem 0.75rem; z-index: 10; }
+
+  /* Header */
+  .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem 1.5rem; padding-block: 1.5rem; }
+  .top-name { margin-right: auto; font-weight: 600; color: var(--ink); text-decoration: none; }
+  .top-nav { display: flex; gap: 1.25rem; }
+  .top-nav a { color: var(--muted); text-decoration: none; }
+  .top-nav a:hover { color: var(--ink); text-decoration: underline; }
+  .theme-button {
+    font: inherit; font-size: 0.9rem; color: var(--ink); background: none; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 999px; padding: 0.2rem 0.85rem;
+  }
+
+  /* Intro */
+  h1 {
+    margin: clamp(2rem, 7vw, 5rem) 0 1.25rem;
+    max-width: 15ch;
+    font-size: clamp(2.2rem, 6.2vw, 4.4rem);
+    font-weight: 600; line-height: 1.04; letter-spacing: -0.025em;
+  }
+  .lead { margin: 0; max-width: 44rem; font-size: 1.25rem; line-height: 1.5; color: var(--muted); }
+
+  /* Demo */
+  .demo { margin: clamp(2rem, 5vw, 3.5rem) 0 0; }
+  .screen {
+    position: relative; overflow: hidden;
+    width: 100%; aspect-ratio: 16 / 8; max-height: 26rem;
+    background: var(--screen);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    border: 1px solid var(--line); border-radius: 10px;
+    cursor: crosshair;
+  }
+  .window {
+    position: absolute; left: 7%; top: 13%; width: min(25rem, 64%);
+    background: #172841; color: #C9D6E8; border-radius: 6px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+    font: 0.82rem/1.55 ui-monospace, Menlo, Consolas, monospace;
+  }
+  .window-title { padding: 0.45rem 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.09); color: #8FA2BC; }
+  .window pre { margin: 0; padding: 0.7rem 0.8rem 0.9rem; font: inherit; white-space: pre-wrap; }
+  .taskbar { position: absolute; inset: auto 0 0 0; height: 9%; background: rgba(255, 255, 255, 0.06); }
+  .cursor-ring, .cursor-dot { position: absolute; left: 0; top: 0; pointer-events: none; border-radius: 50%; will-change: transform; }
+  .cursor-ring { width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 2px solid var(--ring); }
+  .cursor-ring::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--ring); }
+  .cursor-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: #FFFFFF; }
+  .demo figcaption {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.5rem;
+    margin-top: 0.9rem; color: var(--muted); font-size: 0.95rem;
+  }
+  .demo-text { flex: 1 1 22rem; margin: 0; max-width: 40rem; }
+  .demo-toggle { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--ink); cursor: pointer; }
+  .demo-stats { font-variant-numeric: tabular-nums; }
+
+  /* Sections */
+  .section { padding-top: clamp(3rem, 8vw, 5.5rem); }
+  h2 { margin: 0 0 1.5rem; font-size: 1.75rem; font-weight: 600; letter-spacing: -0.01em; }
+  .row {
+    display: grid; grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); gap: 1rem 3rem;
+    padding: 1.75rem 0; border-top: 1px solid var(--line);
+  }
+  .row h3 { margin: 0 0 0.25rem; font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
+  .row-meta { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .row-body p { margin: 0 0 0.9rem; max-width: 40rem; }
+  .row-body ul { margin: 0 0 1rem; padding-left: 1.1rem; max-width: 40rem; }
+  .row-body li { margin-bottom: 0.45rem; }
+  .row-body li strong { font-weight: 600; }
+  .row-body > :last-child { margin-bottom: 0; }
+  @media (max-width: 44rem) { .row { grid-template-columns: 1fr; gap: 0.6rem; } }
+
+  .contact-lead { margin: 0; max-width: 40rem; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin: 1.25rem 0 0; padding: 0; list-style: none; font-size: 1.15rem; }
+  footer { padding: 4rem 0 2.5rem; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#projects">Skip to projects</a>
+
+<div class="wrap">
+  <header class="top">
+    <a class="top-name" href="#top">Mohammad Alsuwais</a>
+    <nav class="top-nav" aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-button" id="theme" type="button" aria-label="Switch between light and dark">Dark</button>
+  </header>
+
+  <main id="top">
+    <h1>One computer&rsquo;s screen, on another computer.</h1>
+    <p class="lead">I&rsquo;m Mohammad Alsuwais, a computer engineering student at Near East University, graduating in January 2027 and based in Doha. For my graduation project I built a remote desktop application in Python.</p>
+
+    <figure class="demo">
+      <div class="screen" id="screen" aria-hidden="true">
+        <div class="window">
+          <div class="window-title">host.py</div>
+          <pre>Waiting for a client on port 5050
+Client connected</pre>
+        </div>
+        <div class="taskbar"></div>
+        <span class="cursor-dot" id="dot" hidden></span>
+        <span class="cursor-ring" id="ring"></span>
+      </div>
+      <figcaption>
+        <p class="demo-text">A small imitation of the project. Move your pointer over the screen: the ring is the remote computer&rsquo;s cursor, and it only moves when a new frame arrives.</p>
+        <label class="demo-toggle"><input type="checkbox" id="slow"> Slow network</label>
+        <output class="demo-stats" id="stats" for="slow"></output>
+      </figcaption>
+    </figure>
+
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <div id="project-list"></div>
+    </section>
+
+    <section class="section" id="background">
+      <h2>Background</h2>
+      <div id="background-list"></div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <p class="contact-lead">Email is the quickest way to reach me. My CV has the full details.</p>
+      <ul class="contact-links" id="contact-links"></ul>
+    </section>
+  </main>
+
+  <footer>Last updated November 2026.</footer>
+</div>
+
+<script>
+// =====================================================================
+// EDIT YOUR CONTENT HERE. Nothing below this block needs to change.
+// =====================================================================
+const PROFILE = {
+  email: "m.suwais04@gmail.com",
+  github: "https://github.com/Mohammad-Alsuwais",
+  linkedin: "",                          // paste your LinkedIn address between the quotes to show the link
+  cv: "Mohammad_Alsuwais_CV_2026.pdf"    // keep this file in the same folder as index.html
+};
+
+// To add a project, copy one { ... } block, paste it after the last one and change the text.
+const PROJECTS = [
+  {
+    title: "Remote desktop application",
+    meta: "Graduation project, 2026",
+    summary: "A Python application that shows one computer's screen on another and lets you control it with your own mouse and keyboard. I tested it between a Windows 11 laptop and a MacBook.",
+    points: [
+      ["Screen", "the host captures its screen, compresses each frame as a JPEG and sends it to the client."],
+      ["Input", "the client records mouse and keyboard events and the host replays them."],
+      ["Security", "every session runs over TLS, and the client has to send the session password before anything else."],
+      ["Speed", "flow control limits how many frames are in flight and stale frames are skipped, so a slow network lowers the frame rate instead of adding delay."],
+      ["Files", "either side can send files to the other, and either computer can act as the host."]
+    ],
+    stack: "Built with Python, TCP sockets, TLS, mss, Pillow, pygame and pynput.",
+    link: "",                            // paste the repository address here once the repository is public
+    linkText: "Source code on GitHub"
+  }
+];
+
+const BACKGROUND = [
+  {
+    title: "B.Sc. in Computer Engineering",
+    meta: "Near East University, Lefkoşa. Graduating January 2027",
+    text: "Courses included Operating Systems, Software Engineering, System Programming, Introduction to Artificial Intelligence, Cyber Security, Mobile Computing and Real-Time Systems."
+  },
+  {
+    title: "Summer trainee",
+    meta: "Bureau Veritas Qatar, Certification and Cybersecurity Advisory Department, Doha. June to July 2025",
+    text: "Learned the basics of information security and IT service management systems (ISO/IEC 27001 and ISO/IEC 20000-1) through guided exercises, with an introduction to vulnerability assessment and penetration testing."
+  },
+  {
+    title: "Summer intern",
+    meta: "Ministry of Communications and Information Technology, Doha. July to August 2024",
+    text: "Worked on an internal certificate-request application built with Microsoft Power Apps, and completed Microsoft's Power Apps for Power User workshop."
+  },
+  {
+    title: "Skills",
+    meta: "",
+    text: "Python, TCP sockets, TLS, Git and GitHub, and Microsoft Power Apps. I work on Windows 11 and macOS, and I speak English and Arabic."
+  }
+];
+// =====================================================================
+// END OF CONTENT
+// =====================================================================
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text) node.textContent = text;
+  return node;
+}
+
+function row(title, meta) {
+  const article = el("article", "row");
+  const head = el("div");
+  head.append(el("h3", "", title));
+  if (meta) head.append(el("p", "row-meta", meta));
+  const body = el("div", "row-body");
+  article.append(head, body);
+  return { article, body };
+}
+
+const projectList = document.getElementById("project-list");
+for (const project of PROJECTS) {
+  const { article, body } = row(project.title, project.meta);
+  body.append(el("p", "", project.summary));
+  if (project.points && project.points.length) {
+    const list = el("ul");
+    for (const [label, text] of project.points) {
+      const item = el("li");
+      item.append(el("strong", "", label + ": "), text);
+      list.append(item);
+    }
+    body.append(list);
+  }
+  if (project.stack) body.append(el("p", "", project.stack));
+  if (project.link) {
+    const p = el("p");
+    const a = el("a", "", project.linkText || "View project");
+    a.href = project.link;
+    p.append(a);
+    body.append(p);
+  }
+  projectList.append(article);
+}
+
+const backgroundList = document.getElementById("background-list");
+for (const entry of BACKGROUND) {
+  const { article, body } = row(entry.title, entry.meta);
+  body.append(el("p", "", entry.text));
+  backgroundList.append(article);
+}
+
+const contactLinks = document.getElementById("contact-links");
+const links = [
+  [PROFILE.email, "mailto:" + PROFILE.email, PROFILE.email],
+  [PROFILE.cv, PROFILE.cv, "Download my CV (PDF)"],
+  [PROFILE.github, PROFILE.github, "GitHub"],
+  [PROFILE.linkedin, PROFILE.linkedin, "LinkedIn"]
+];
+for (const [value, href, text] of links) {
+  if (!value) continue;
+  const item = el("li");
+  const a = el("a", "", text);
+  a.href = href;
+  item.append(a);
+  contactLinks.append(item);
+}
+
+// Light and dark
+const root = document.documentElement;
+const themeButton = document.getElementById("theme");
+const isDark = () => root.dataset.theme
+  ? root.dataset.theme === "dark"
+  : matchMedia("(prefers-color-scheme: dark)").matches;
+const labelTheme = () => { themeButton.textContent = isDark() ? "Light" : "Dark"; };
+themeButton.addEventListener("click", () => {
+  const next = isDark() ? "light" : "dark";
+  root.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (e) {}
+  labelTheme();
+});
+labelTheme();
+
+// The demo: your pointer is the client's mouse. Its position travels to the "host" and comes
+// back inside the next frame, so the ring trails by one round trip. Only two frames may be in
+// flight at once, which is why a slow network gives fewer frames, not a growing delay.
+(function () {
+  const screen = document.getElementById("screen");
+  const ring = document.getElementById("ring");
+  const dot = document.getElementById("dot");
+  const slow = document.getElementById("slow");
+  const stats = document.getElementById("stats");
+  const FPS = 15;
+  const MAX_IN_FLIGHT = 2;
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let pointer = { x: 0.62, y: 0.55 };
+  let lastInput = -Infinity;
+  let lastSend = 0;
+  const inFlight = [];
+
+  const roundTrip = () => (slow.checked ? 800 : 120);
+  const place = (node, p) => {
+    node.style.transform = "translate(" + p.x * screen.clientWidth + "px, " + p.y * screen.clientHeight + "px)";
+  };
+  const report = () => {
+    const ms = roundTrip();
+    const frames = Math.min(FPS, Math.round((MAX_IN_FLIGHT * 1000 / ms) * 10) / 10);
+    stats.textContent = "Round trip " + ms + " ms, about " + frames + " frames a second";
+  };
+
+  screen.addEventListener("pointermove", (event) => {
+    const box = screen.getBoundingClientRect();
+    pointer = { x: (event.clientX - box.left) / box.width, y: (event.clientY - box.top) / box.height };
+    lastInput = performance.now();
+  });
+  slow.addEventListener("change", report);
+
+  function tick(now) {
+    const idle = now - lastInput > 2500 && !reduceMotion;
+    if (idle) pointer = { x: 0.5 + 0.34 * Math.sin(now / 1900), y: 0.5 + 0.3 * Math.sin(now / 1300 + 1) };
+    dot.hidden = !idle;
+    if (idle) place(dot, pointer);
+    while (inFlight.length && inFlight[0].due <= now) place(ring, inFlight.shift());
+    if (now - lastSend >= 1000 / FPS && inFlight.length < MAX_IN_FLIGHT) {
+      inFlight.push({ x: pointer.x, y: pointer.y, due: now + roundTrip() });
+      lastSend = now;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  place(ring, pointer);
+  report();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
